@@ -16,7 +16,7 @@ namespace UsersApi.DataAccess.DataAccess.Implementations
             _UsersRepository = usersRepository;
         }
 
-        public UserItem CreateUser(UserItem obj)
+        public User CreateUser(User obj)
         {
             return _UsersRepository.CreateUser(obj);
         }
@@ -26,12 +26,12 @@ namespace UsersApi.DataAccess.DataAccess.Implementations
             _UsersRepository.Delete(id);
         }
 
-        public List<UserItem> GetUsers()
+        public List<User> GetUsers()
         {
             return _UsersRepository.GetUsers();
         }
 
-        public UserItem UpdateUser(UserItem obj)
+        public User UpdateUser(User obj)
         {
             return _UsersRepository.UpdateUser(obj);
         }

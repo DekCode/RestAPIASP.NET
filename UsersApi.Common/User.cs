@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UsersApi.Models
+namespace UsersApi.Common
 {
-    public class UserObject
+    public class User
     {
         public string Id { get; set; }
         public string Name { get; set; }

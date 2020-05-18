@@ -7,11 +7,11 @@ namespace UsersApi.Business.Managers.Interfaces
 {
     public interface IUsersManager
     {
-        List<UserItem> GetUsers();
+        List<User> GetUsers();
 
-        UserItem CreateUser(UserItem obj);
+        User CreateUser(User obj);
 
-        UserItem UpdateUser(string id, UserItem obj);
+        User UpdateUser(string id, User obj);
 
         void Delete(string id);
     }

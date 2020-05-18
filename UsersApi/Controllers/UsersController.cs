@@ -29,7 +29,7 @@ namespace UsersApi.Controllers
 
         [Route("")]
         [HttpPost]
-        public ObjectResult Create(UserObject user)
+        public ObjectResult Create(UserItem user)
         {
             var userItem = UsersMapper.MapToCommon(user);
 
@@ -42,7 +42,7 @@ namespace UsersApi.Controllers
 
         [Route("{id}")]
         [HttpPatch]
-        public ObjectResult Update(string id, UserObject user)
+        public ObjectResult Update(string id, UserItem user)
         {
             var userItem = UsersMapper.MapToCommon(user);
 

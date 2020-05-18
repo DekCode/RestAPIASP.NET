@@ -7,11 +7,11 @@ namespace UsersApi.DataAccess.Repositories.Interfaces
 {
     public interface IUsersRespository
     {
-        List<UserItem> GetUsers();
+        List<User> GetUsers();
 
-        UserItem CreateUser(UserItem obj);
+        User CreateUser(User obj);
 
-        UserItem UpdateUser(UserItem obj);
+        User UpdateUser(User obj);
 
         void Delete(string id);
     }

@@ -9,9 +9,9 @@ namespace UsersApi.DataAccess.Repositories.Implementations
 {
     public class UsersRepository : IUsersRespository
     {
-        private static readonly List<UserItem> _users = new List<UserItem>();
+        private static readonly List<User> _users = new List<User>();
 
-        public UserItem CreateUser(UserItem obj)
+        public User CreateUser(User obj)
         {
             obj.Id = Guid.NewGuid().ToString();
             _users.Add(obj);
@@ -23,12 +23,12 @@ namespace UsersApi.DataAccess.Repositories.Implementations
             _users.RemoveAll(item => item.Id == id);
         }
 
-        public List<UserItem> GetUsers()
+        public List<User> GetUsers()
         {
             return _users;
         }
 
-        public UserItem UpdateUser(UserItem obj)
+        public User UpdateUser(User obj)
         {
             var user = _users.FirstOrDefault(item => item.Id == obj.Id);
 

@@ -16,7 +16,7 @@ namespace UsersApi.Business.Managers.Implementations
             _UsersDataAccess = usersDataAccess;
         }
 
-        public UserItem CreateUser(UserItem obj)
+        public User CreateUser(User obj)
         {
             return _UsersDataAccess.CreateUser(obj);
         }
@@ -26,12 +26,12 @@ namespace UsersApi.Business.Managers.Implementations
             _UsersDataAccess.Delete(id);
         }
 
-        public List<UserItem> GetUsers()
+        public List<User> GetUsers()
         {
             return _UsersDataAccess.GetUsers();
         }
 
-        public UserItem UpdateUser(string id, UserItem obj)
+        public User UpdateUser(string id, User obj)
         {
             obj.Id = id;
 

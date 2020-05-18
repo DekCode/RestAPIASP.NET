@@ -9,7 +9,21 @@ namespace UsersApi.Mappers
 {
     public static class UsersMapper
     {
-        public static UserItem MapToCommon(UserObject obj)
+        public static User MapToCommon(UserItem obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+
+            return new User
+            {
+                Id = obj.Id,
+                Name = obj.Name
+            };
+        }
+
+        public static UserItem MapToDto(User obj)
         {
             if (obj == null)
             {
@@ -17,20 +31,6 @@ namespace UsersApi.Mappers
             }
 
             return new UserItem
-            {
-                Id = obj.Id,
-                Name = obj.Name
-            };
-        }
-
-        public static UserObject MapToDto(UserItem obj)
-        {
-            if (obj == null)
-            {
-                return null;
-            }
-
-            return new UserObject
             {
                 Id = obj.Id,
                 Name = obj.Name
