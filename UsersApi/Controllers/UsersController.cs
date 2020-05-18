@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UsersApi.Business.Managers.Interfaces;
+using UsersApi.Mappers;
+using UsersApi.Models;
 
 namespace UsersApi.Controllers
 {
@@ -10,46 +13,51 @@ namespace UsersApi.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private static readonly List<UserItem> _users = new List<UserItem>();
+        private IUsersManager _UsersManager;
+
+        public UsersController(IUsersManager usersManager)
+        {
+            _UsersManager = usersManager;
+        }
 
         [Route("")]
         [HttpGet]
         public ObjectResult Get()
         {
-            return Ok(_users);
+            return Ok(_UsersManager.GetUsers());
         }
 
         [Route("")]
         [HttpPost]
-        public ObjectResult Create(UserItem user)
+        public ObjectResult Create(UserObject user)
         {
-            user.Id = Guid.NewGuid().ToString();
-            _users.Add(user);
+            var userItem = UsersMapper.MapToCommon(user);
 
-            return Ok(user);
+            var result = _UsersManager.CreateUser(userItem);
+
+            var userObject = UsersMapper.MapToDto(result);
+
+            return Ok(userObject);
         }
 
         [Route("{id}")]
         [HttpPatch]
-        public ObjectResult Update(string id, UserItem user)
+        public ObjectResult Update(string id, UserObject user)
         {
-            var obj = _users.FirstOrDefault(item => item.Id == id);
+            var userItem = UsersMapper.MapToCommon(user);
 
-            if (obj == null)
-            {
-                return new NotFoundObjectResult(id);
-            }
+            var result = _UsersManager.UpdateUser(id, userItem);
 
-            obj.Name = user.Name;
+            var userObject = UsersMapper.MapToDto(result);
 
-            return Ok(obj);
+            return Ok(userObject);
         }
 
         [Route("{id}")]
         [HttpDelete]
         public ObjectResult Delete(string id)
         {
-            _users.RemoveAll(item => item.Id == id);
+            _UsersManager.Delete(id);
 
             return Ok(id);
         }

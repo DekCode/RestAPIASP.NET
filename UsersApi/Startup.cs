@@ -9,6 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using UsersApi.Business.Managers.Implementations;
+using UsersApi.Business.Managers.Interfaces;
+using UsersApi.DataAccess.DataAccess.Implementations;
+using UsersApi.DataAccess.DataAccess.Interfaces;
+using UsersApi.DataAccess.Repositories.Implementations;
+using UsersApi.DataAccess.Repositories.Interfaces;
 
 namespace UsersApi
 {
@@ -25,6 +31,10 @@ namespace UsersApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddTransient<IUsersManager, UsersManager>();
+            services.AddTransient<IUsersDataAccess, UsersDataAccess>();
+            services.AddTransient<IUsersRespository, UsersRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
