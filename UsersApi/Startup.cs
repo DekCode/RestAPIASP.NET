@@ -32,9 +32,8 @@ namespace UsersApi
         {
             services.AddControllers();
 
-            services.AddTransient<IUsersManager, UsersManager>();
-            services.AddTransient<IUsersDataAccess, UsersDataAccess>();
-            services.AddTransient<IUsersRespository, UsersRepository>();
+            UsersApi.Business.Binder.Setup(services);
+            UsersApi.DataAccess.Binder.Setup(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
