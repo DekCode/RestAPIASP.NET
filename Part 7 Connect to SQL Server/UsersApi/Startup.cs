@@ -33,7 +33,7 @@ namespace UsersApi
             services.AddControllers();
 
             UsersApi.Business.Binder.Setup(services);
-            UsersApi.DataAccess.Binder.Setup(services);
+            UsersApi.DataAccess.Binder.Setup(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

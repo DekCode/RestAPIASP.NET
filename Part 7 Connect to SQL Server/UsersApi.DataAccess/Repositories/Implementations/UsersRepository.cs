@@ -3,41 +3,60 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UsersApi.Common;
+using UsersApi.DataAccess.DatabaseContexts;
 using UsersApi.DataAccess.Repositories.Interfaces;
 
 namespace UsersApi.DataAccess.Repositories.Implementations
 {
     public class UsersRepository : IUsersRespository
     {
-        private static readonly List<User> _users = new List<User>();
+        private DbUsersContext _DbUsersContext;
+
+        public UsersRepository(DbUsersContext dbUsersContext)
+        {
+            _DbUsersContext = dbUsersContext;
+        }
 
         public User CreateUser(User obj)
         {
             obj.Id = Guid.NewGuid().ToString();
-            _users.Add(obj);
+            obj.CreationDate = DateTime.Now;
+
+            _DbUsersContext.UsersTable.Add(obj);
+            _DbUsersContext.SaveChanges();
             return obj;
         }
 
         public void Delete(string id)
         {
-            _users.RemoveAll(item => item.Id == id);
+
+            var items = _DbUsersContext.UsersTable.Where(item => item.Id == id);
+
+            if (items.Any())
+            {
+                _DbUsersContext.Remove(items.First());
+                _DbUsersContext.SaveChanges();
+            }
         }
 
         public List<User> GetUsers()
         {
-            return _users;
+            return _DbUsersContext.UsersTable.ToList();
         }
 
         public User UpdateUser(User obj)
         {
-            var user = _users.FirstOrDefault(item => item.Id == obj.Id);
+            var items = _DbUsersContext.UsersTable.Where(item => item.Id == obj.Id);
 
-            if (obj == null)
+            if (items.FirstOrDefault() == null)
             {
                 return null;
             }
 
+            var user = items.FirstOrDefault();
             user.Name = obj.Name;
+
+            _DbUsersContext.SaveChanges();
 
             return user;
         }
