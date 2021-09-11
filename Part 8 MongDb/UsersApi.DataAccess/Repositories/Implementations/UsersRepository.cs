@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,38 +13,41 @@ namespace UsersApi.DataAccess.Repositories.Implementations
     {
         private static List<User> _users = new List<User>();
 
+        private IMongoCollection<User> _collection;
+
+        public UsersRepository(IMongoDbSettings settings)
+        {
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DbName);
+
+            _collection = database.GetCollection<User>(settings.CollectionName);
+        }
+
         public User CreateUser(User obj)
         {
             obj.Id = Guid.NewGuid().ToString();
             obj.CreationDate = DateTime.Now;
 
-            _users.Add(obj);
+            _collection.InsertOne(obj);
+
             return obj;
         }
 
         public void Delete(string id)
         {
-            _users.RemoveAll(user => user.Id == id);
+            _collection.DeleteOne(x => x.Id == id);
         }
 
         public List<User> GetUsers()
         {
-            return _users;
+            return _collection.Find(_ => true).ToList();
         }
 
         public User UpdateUser(User obj)
         {
-            var items = _users.Where(item => item.Id == obj.Id);
+            _collection.ReplaceOne(x => x.Id == obj.Id, obj);
 
-            if (items.FirstOrDefault() == null)
-            {
-                return null;
-            }
-
-            var user = items.FirstOrDefault();
-            user.Name = obj.Name;
-
-            return user;
+            return obj;
         }
     }
 }
