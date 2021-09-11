@@ -10,7 +10,7 @@ namespace UsersApi.DataAccess.Repositories.Implementations
 {
     public class UsersRepository : IUsersRespository
     {
-        private List<User> _users = new List<User>();
+        private static List<User> _users = new List<User>();
 
         public User CreateUser(User obj)
         {

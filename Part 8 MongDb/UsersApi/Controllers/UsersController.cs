@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UsersApi.Business.Managers.Interfaces;
 using UsersApi.Mappers;
-using UsersApi.Models;
 
 namespace UsersApi.Controllers
 {
